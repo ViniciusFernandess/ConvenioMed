@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ConvenioMed.Agendamento.Domain.CommandHandlers
 {
-    public class AgendamentoCommandHandler : IRequestHandler<AgendarCommand, RequestResult>
+    public class AgendamentoCommandHandler : IRequestHandler<SolicitarAgendamentoCommand, RequestResult>
     {
         private readonly IAgendamentoRepository _repo;
         private readonly IBus _bus;
@@ -22,21 +22,19 @@ namespace ConvenioMed.Agendamento.Domain.CommandHandlers
             _bus = bus;
         } 
 
-        public async Task<RequestResult> Handle(AgendarCommand request, CancellationToken cancellationToken)
+        public async Task<RequestResult> Handle(SolicitarAgendamentoCommand request, CancellationToken cancellationToken)
         {
             if (!request.IsValid())
-                return new RequestResult(request.IsValid(), (request.GetErros()));
+                return new RequestResult(request.IsValid(), "Erro ao solicitar agendamento.", (request.GetErros()));
 
             var agendamento = new AgendamentoEntity(request.IdCliente, request.IdMedico, request.DataAgendamento);
 
             var result = await _repo.Insert(agendamento);
 
-            //var endpoint = await _bus.GetSendEndpoint(new Uri("queue:agendamento-realizado"));
-            //await endpoint.Send<AgendamentoRegistradoContract>(new { IdCliente = result.IdCliente, IdMedico = result.IdMedico } );
+            var endpoint = await _bus.GetSendEndpoint(new Uri("queue:agendamento-solicitado"));
+            await endpoint.Send<AgendamentoRegistradoContract>(new { IdCliente = result.IdCliente, IdMedico = result.IdMedico });
 
-            await _bus.Publish<AgendamentoRegistradoContract>(new { IdCliente = result.IdCliente, IdMedico = result.IdMedico } );
-
-            return new RequestResult(request.IsValid(), (request.GetErros()));
+            return new RequestResult(request.IsValid(), "Agendamento Solicitado com sucesso.", (request.GetErros()));
         } 
     } 
 } 

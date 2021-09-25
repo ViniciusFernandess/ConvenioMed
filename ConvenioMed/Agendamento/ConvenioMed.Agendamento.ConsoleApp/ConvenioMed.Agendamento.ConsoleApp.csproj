@@ -3,24 +3,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="7.2.1" />
-    <PackageReference Include="MassTransit.AspNetCore" Version="7.2.1" />
     <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.2.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\_Core\ConvenioMed.Core.Domain\ConvenioMed.Core.Domain.csproj" />
-    <ProjectReference Include="..\ConvenioMed.Financeiro.Domain\ConvenioMed.Financeiro.Domain.csproj" />
-    <ProjectReference Include="..\ConvenioMed.Financeiro.Infra.Data\ConvenioMed.Financeiro.Infra.Data.csproj" />
+    <ProjectReference Include="..\ConvenioMed.Agendamento.Domain\ConvenioMed.Agendamento.Domain.csproj" />
   </ItemGroup>
 
 </Project>

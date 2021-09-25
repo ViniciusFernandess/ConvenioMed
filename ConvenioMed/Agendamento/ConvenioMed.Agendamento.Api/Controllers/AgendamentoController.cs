@@ -29,7 +29,7 @@ namespace ConvenioMed.Agendamento.Api.Controllers
         } 
 
         [HttpPost]
-        public async Task<ActionResult> Post(AgendarCommand command)
+        public async Task<ActionResult> Post(SolicitarAgendamentoCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
